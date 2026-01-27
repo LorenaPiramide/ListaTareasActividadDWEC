@@ -1,0 +1,34 @@
+{
+    "usuarios":[
+        {
+            "id":"1",
+            "email":"admin@gmail.com",
+            "password":"admin",
+            "nombre":"Administrador",
+            "apellidos":"admin",
+            "news":true
+        },
+        {
+            "id":"2",
+            "email":"pablo@gmail.com",
+            "password":"123456",
+            "nombre":"Pablo",
+            "apellidos":"Barrabes",
+            "news":true
+        }
+    ],
+        "tareas":[
+            {
+                "id":"1",
+                "nombre":"Actividad UD 4",
+                "acabada":false,
+                "id_user":"1"
+            },
+            {
+                "id":"2",
+                "nombre":"Tomar un cafe",
+                "acabada":false,
+                "id_user":"2"
+            }
+        ]
+}
