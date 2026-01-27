@@ -1,0 +1,1 @@
+// En él podemos implementar funciones que realicen acciones NO relacionadas con peticiones y que por organización implementamos aparte.
