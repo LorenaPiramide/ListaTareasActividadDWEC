@@ -1,1 +1,1 @@
-// Validación del login y entiendo que el registro
+// Validación del login
