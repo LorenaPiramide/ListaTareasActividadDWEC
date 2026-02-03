@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", validar);
+document.querySelector("#formRegistro").addEventListener("DOMContentLoaded", asignarValidacion());
 
-function validar() {
+function asignarValidacion() {
     document.getElementById("nombre").addEventListener("blur", validarNombre);
     document.getElementById("apellidos").addEventListener("blur", validarApellidos);
     document.getElementById("email").addEventListener("blur", validarEmail);
@@ -10,14 +10,23 @@ function validar() {
     document.getElementById("condiciones").addEventListener("blur", validarCondiciones);
 }
 
+function validar() {
+    e.preventDefault();
+    if(validarNombre()) {
+        // ??
+    }
+}
+
 // Nombre: Obligatorio, longitud mínima 3 caracteres empezando por mayúscula. Informar de si cumple la validación al salir del campo.
 function validarNombre(e) {
     if (e.target.value.length < 3) {
         e.target.classList.add("resaltado");
         document.getElementById("errorNombre").innerText = "El nombre tiene que tener 3 letras como mínimo.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
         document.getElementById("errorNombre").innerText = "";
+        return true;
     }
 }
 
@@ -25,10 +34,12 @@ function validarNombre(e) {
 function validarApellidos(e) {
     if (e.target.value.length < 3) {
         e.target.classList.add("resaltado");
-        document.getElementById("errorApellidos").innerText = "El apellido debe tener al menos 3 letras como mínimo."
+        document.getElementById("errorApellidos").innerText = "El apellido debe tener al menos 3 letras como mínimo.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
         document.getElementById("errorApellidos").innerText = "";
+        return true;
     }
 }
 
@@ -41,10 +52,12 @@ function validarEmail(e) {
 
     if (!regex.test(email)) {
         e.target.classList.add("resaltado");
-        document.getElementById("errorEmail").innerText = "El email no es válido."
+        document.getElementById("errorEmail").innerText = "El email no es válido.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
         document.getElementById("errorEmail").innerText = "";
+        return true;
     }
 }
 
@@ -56,9 +69,11 @@ function validarRepetirEmail(e) {
     if (email !== emailRepetido) {
         e.target.classList.add("resaltado");
         document.getElementById("errorRepetirEmail").innerText = "Los emails no coinciden.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
-        document.getElementById("errorRepetirEmail")
+        document.getElementById("errorRepetirEmail");
+        return true;
     }
 }
 
@@ -70,9 +85,11 @@ function validarPassword(e) {
     if (!regex.test(password)) {
         e.target.classList.add("resaltado");
         document.getElementById("errorPassword").innerText = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
         document.getElementById("errorPassword").innerText = "";
+        return true;
     }
 }
 
@@ -84,9 +101,11 @@ function validarRepetirPassword(e) {
     if (password !== passwordRepetida) {
         e.target.classList.add("resaltado");
         document.getElementById("errorRepetirPassword").innerText = "Las contraseñas no coinciden.";
+        return false;
     } else {
         e.target.classList.remove("resaltado");
         document.getElementById("errorRepetirPassword").innerText = "";
+        return true;
     }
 }
 
@@ -97,8 +116,10 @@ function validarCondiciones(e) {
     if (!condiciones.checked) {
         e.target.classList.add("resaltado");
         document.getElementById("errorCondiciones").innerText = "Debes aceptar las condiciones.";
+        return false;
     } else {
         e.target.remove("resaltado");
         document.getElementById("errorCondiciones").innerText = "";
+        return true;
     }
 }
