@@ -11,7 +11,7 @@ document.getElementById("btnLogin").addEventListener("click", function() {
         return;
     }
 
-    fetch(URL_SERVER + "/login", {
+    fetch(URL_SERVER + '/login', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
