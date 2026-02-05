@@ -123,3 +123,7 @@ function validarCondiciones(e) {
         return true;
     }
 }
+
+document.getElementById("btnRegistrarUsuario").addEventListener("click", function() {
+    // Código para que el botón funcione, correr todos los validadores. Si devuelven true, al json server para el nuevo usuario
+})
