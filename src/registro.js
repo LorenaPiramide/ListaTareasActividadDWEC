@@ -1,6 +1,47 @@
-document.querySelector("#formRegistro").addEventListener("DOMContentLoaded", asignarValidacion());
+import { registro } from "./peticiones.js";
+
+document.addEventListener("DOMContentLoaded", asignarValidacion);
 
 function asignarValidacion() {
+    var form = document.getElementById("formRegistro");
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var nombre = document.getElementById("nombre");
+        var apellidos = document.getElementById("apellidos");
+        var email = document.getElementById("email");
+        var repetirEmail = document.getElementById("repetirEmail");
+        var password = document.getElementById("password");
+        var repetirPassword = document.getElementById("repetirPassword");
+        var condiciones = document.getElementById("condiciones");
+        var errorRegistro = document.getElementById("errorRegistro");
+
+        if (!validarNombre({ target: nombre })) return;
+        if (!validarApellidos({ target: apellidos })) return;
+        if (!validarEmail({ target: email })) return;
+        if (!validarRepetirEmail({ target: repetirEmail })) return;
+        if (!validarPassword({ target: password })) return;
+        if (!validarRepetirPassword({ target: repetirPassword })) return;
+        if (!validarCondiciones({ target: condiciones })) return;
+
+        if (errorRegistro) errorRegistro.innerText = "";
+
+        var body = {
+            nombre: nombre.value.trim(),
+            apellidos: apellidos.value.trim(),
+            email: email.value.trim(),
+            password: password.value,
+            condiciones: condiciones.checked,
+            news: document.getElementById("news").checked
+        };
+
+        registro(body)
+        .then(() => window.location.href = "index.html")
+        .catch(() => errorRegistro.innerText = "No se ha podido realizar el registro.")
+    });
+
     document.getElementById("nombre").addEventListener("blur", validarNombre);
     document.getElementById("apellidos").addEventListener("blur", validarApellidos);
     document.getElementById("email").addEventListener("blur", validarEmail);
@@ -10,37 +51,43 @@ function asignarValidacion() {
     document.getElementById("condiciones").addEventListener("blur", validarCondiciones);
 }
 
-function validar() {
-    e.preventDefault();
-    if(validarNombre()) {
-        // ??
-    }
-}
 
 // Nombre: Obligatorio, longitud mínima 3 caracteres empezando por mayúscula. Informar de si cumple la validación al salir del campo.
 function validarNombre(e) {
-    if (e.target.value.length < 3) {
+    const value = e.target.value.trim();
+    const errorNombre = document.getElementById("errorNombre");
+    if (value.length < 3) {
         e.target.classList.add("resaltado");
-        document.getElementById("errorNombre").innerText = "El nombre tiene que tener 3 letras como mínimo.";
+        errorNombre.innerText = "El nombre tiene que tener 3 letras como mínimo.";
         return false;
-    } else {
-        e.target.classList.remove("resaltado");
-        document.getElementById("errorNombre").innerText = "";
-        return true;
     }
+    if (value.length > 0 && value[0] !== value[0].toUpperCase()) {
+        e.target.classList.add("resaltado");
+        errorNombre.innerText = "El nombre debe empezar por mayúscula.";
+        return false;
+    }
+    e.target.classList.remove("resaltado");
+    errorNombre.innerText = "";
+    return true;
 }
 
 // Apellidos: Igual que el Nombre.
 function validarApellidos(e) {
-    if (e.target.value.length < 3) {
+    const value = e.target.value.trim();
+    const errorApellidos = document.getElementById("errorApellidos");
+    if (value.length < 3) {
         e.target.classList.add("resaltado");
-        document.getElementById("errorApellidos").innerText = "El apellido debe tener al menos 3 letras como mínimo.";
+        errorApellidos.innerText = "El apellido debe tener al menos 3 letras como mínimo.";
         return false;
-    } else {
-        e.target.classList.remove("resaltado");
-        document.getElementById("errorApellidos").innerText = "";
-        return true;
     }
+    if (value.length > 0 && value[0] !== value[0].toUpperCase()) {
+        e.target.classList.add("resaltado");
+        errorApellidos.innerText = "Los apellidos deben empezar por mayúscula.";
+        return false;
+    }
+    e.target.classList.remove("resaltado");
+    errorApellidos.innerText = "";
+    return true;
 }
 
 // Email: Obligatorio ya que lo usaremos como nombre de usuario para el inicio de sesión.
@@ -72,7 +119,7 @@ function validarRepetirEmail(e) {
         return false;
     } else {
         e.target.classList.remove("resaltado");
-        document.getElementById("errorRepetirEmail");
+        document.getElementById("errorRepetirEmail").innerText = "";
         return true;
     }
 }
@@ -118,12 +165,8 @@ function validarCondiciones(e) {
         document.getElementById("errorCondiciones").innerText = "Debes aceptar las condiciones.";
         return false;
     } else {
-        e.target.remove("resaltado");
+        e.target.classList.remove("resaltado");
         document.getElementById("errorCondiciones").innerText = "";
         return true;
     }
 }
-
-document.getElementById("btnRegistrarUsuario").addEventListener("click", function() {
-    // Código para que el botón funcione, correr todos los validadores. Si devuelven true, al json server para el nuevo usuario
-})
