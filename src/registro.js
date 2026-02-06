@@ -18,16 +18,17 @@ function asignarValidacion() {
         var condiciones = document.getElementById("condiciones");
         var errorRegistro = document.getElementById("errorRegistro");
 
-        if (!validarNombre({ target: nombre })) return;
-        if (!validarApellidos({ target: apellidos })) return;
-        if (!validarEmail({ target: email })) return;
-        if (!validarRepetirEmail({ target: repetirEmail })) return;
-        if (!validarPassword({ target: password })) return;
-        if (!validarRepetirPassword({ target: repetirPassword })) return;
-        if (!validarCondiciones({ target: condiciones })) return;
+        if (!validarNombre(nombre)) return;
+        if (!validarApellidos(apellidos)) return;
+        if (!validarEmail(email)) return;
+        if (!validarRepetirEmail(repetirEmail)) return;
+        if (!validarPassword(password)) return;
+        if (!validarRepetirPassword(repetirPassword)) return;
+        if (!validarCondiciones(condiciones)) return;
 
         if (errorRegistro) errorRegistro.innerText = "";
 
+        // Guardamos los datos del usuario recién registrado
         var body = {
             nombre: nombre.value.trim(),
             apellidos: apellidos.value.trim(),

@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAddTask = document.getElementById("btnAddTask");
     const btnLogout = document.getElementById("btnLogout");
 
-    // Función para crear un elemento de tarea
     function crearElementoTarea(t) {
         const li = document.createElement("li");
         li.dataset.id = t.id;
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
 
-        // Cambiar estado
         checkbox.addEventListener("change", () => {
             const anterior = t.acabada;
             t.acabada = checkbox.checked;
@@ -38,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Eliminar tarea
         btnEliminar.addEventListener("click", () => {
             eliminarTarea(t.id)
                 .then(() => li.remove())
@@ -49,14 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
         lista.appendChild(li);
     }
 
-    // Obtener y mostrar tareas iniciales
     obtenerTareasUsuario(usuario.id)
         .then(tareas => tareas.forEach(crearElementoTarea))
         .catch(err => console.error(err));
 
-    // Añadir tarea nueva
     btnAddTask.addEventListener("click", () => {
-        // Crear formulario dinámico
+        // Formulario dinámico
         const form = document.createElement("div");
 
         const inputNombre = document.createElement("input");
@@ -72,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnGuardar.textContent = "Guardar";
 
         form.append(inputNombre, inputAcabada, labelAcabada, btnGuardar);
+        // parentNode = main. Pone el formulario justo después de la lista de tareas.
         lista.parentNode.insertBefore(form, lista.nextSibling);
 
         btnGuardar.addEventListener("click", () => {

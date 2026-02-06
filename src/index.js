@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLogin = document.getElementById("btnLogin");
 
     if (!btnLogin) {
-        console.error("No se encontró el botón #btnLogin");
+        console.error("No se encontró el botón de login.");
         return;
     }
 

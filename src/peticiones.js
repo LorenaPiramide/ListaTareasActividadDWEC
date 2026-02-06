@@ -2,6 +2,7 @@
 import { URL_SERVER } from './constantes.js';
 
 export function login(email, password) {
+    // Si no se pone el encodeURIComponent, el @ u otros carácteres especiales, pueden fallar
     return fetch(`${URL_SERVER}usuarios?email=${encodeURIComponent(email)}`)
         .then(res => {
             if (!res.ok) throw new Error("No se pudo conectar con el servidor");
