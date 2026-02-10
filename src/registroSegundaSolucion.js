@@ -34,13 +34,10 @@ function validar(e) {
             news: document.querySelector("#news").checked
         };
 
-        post('/usuarios',
-            nuevoUsuario,
-            (data) => {
-                alert("usuario registrado"),
-                    console.log(data)
-            },
-            (error) => alert("Error al registrar"))
+        registro(nuevoUsuario)
+            .then(() => window.location.href = "index.html")
+            .catch(() => errorRegistro.innerText = "No se ha podido realizar el registro.");
+
     }
 }
 
