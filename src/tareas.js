@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAddTask = document.getElementById("btnAddTask");
     const btnLogout = document.getElementById("btnLogout");
 
-    function crearElementoTarea(t) {
+    function pintarTarea(t) {
         const li = document.createElement("li");
         li.dataset.id = t.id;
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     obtenerTareasUsuario(usuario.id)
-        .then(tareas => tareas.forEach(crearElementoTarea))
+        .then(tareas => tareas.forEach(pintarTarea))
         .catch(err => console.error(err));
 
     btnAddTask.addEventListener("click", () => {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             crearTarea(nuevaTarea)
                 .then(t => {
-                    crearElementoTarea(t); // añadir directamente
+                    pintarTarea(t); // añadir directamente
                     form.remove();
                 })
                 .catch(() => alert("Error al crear la tarea"));
