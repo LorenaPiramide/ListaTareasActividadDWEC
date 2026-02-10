@@ -68,7 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         form.append(inputNombre, inputAcabada, labelAcabada, btnGuardar);
         // parentNode = main. Pone el formulario justo después de la lista de tareas.
-        lista.parentNode.insertBefore(form, lista.nextSibling);
+        // lista.parentNode.insertBefore(form, lista.nextSibling);
+        // form.appendChild(inputNombre);
+        // form.appendChild(inputAcabada);
+        // form.appendChild(labelAcabada);
+        // form.appendChild(btnGuardar);
+        lista.after(form);
 
         btnGuardar.addEventListener("click", () => {
             const nuevaTarea = {
