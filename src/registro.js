@@ -31,11 +31,13 @@ function validarFormulario(e) {
 
     let hayVacios = false;
 
+    // elemento → input.
     campos.forEach(c => {
         if (!c.elemento.value.trim()) {
             c.elemento.classList.add("resaltado");
             hayVacios = true;
         } else {
+            // Quitamos la clase "resaltado" del elemento
             c.elemento.classList.remove("resaltado");
         }
     });
