@@ -3,68 +3,10 @@ import { registro } from "./peticiones.js";
 document.addEventListener("DOMContentLoaded", asignarValidacion);
 
 function asignarValidacion() {
-    var form = document.getElementById("formRegistro");
+    let form = document.getElementById("formRegistro");
     if (!form) return;
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const campos = [
-            { elemento: nombre, nombreCampo: "Nombre" },
-            { elemento: apellidos, nombreCampo: "Apellidos" },
-            { elemento: email, nombreCampo: "Email" },
-            { elemento: repetirEmail, nombreCampo: "Repetir Email" },
-            { elemento: password, nombreCampo: "Password" },
-            { elemento: repetirPassword, nombreCampo: "Repetir Password" }
-        ];
-
-        let hayVacios = false;
-
-        campos.forEach(c => {
-            if (!c.elemento.value.trim()) {
-                c.elemento.classList.add("resaltado");
-                hayVacios = true;
-            } else {
-                c.elemento.classList.remove("resaltado");
-            }
-        });
-
-        if (!condiciones.checked) {
-            condiciones.classList.add("resaltado");
-            hayVacios = true;
-        } else {
-            condiciones.classList.remove("resaltado");
-        }
-
-        if (hayVacios) {
-            errorRegistro.innerText = " No puedes dejar campos vacíos.";
-            return;
-        }
-
-        if (!validarNombre({ target: nombre })) return;
-        if (!validarApellidos({ target: apellidos })) return;
-        if (!validarEmail({ target: email })) return;
-        if (!validarRepetirEmail({ target: repetirEmail })) return;
-        if (!validarPassword({ target: password })) return;
-        if (!validarRepetirPassword({ target: repetirPassword })) return;
-        if (!validarCondiciones({ target: condiciones })) return;
-
-        if (errorRegistro) errorRegistro.innerText = "";
-
-        // Guardamos los datos del usuario recién registrado
-        var body = {
-            nombre: nombre.value.trim(),
-            apellidos: apellidos.value.trim(),
-            email: email.value.trim(),
-            password: password.value,
-            condiciones: condiciones.checked,
-            news: document.getElementById("news").checked
-        };
-
-        registro(body)
-        .then(() => window.location.href = "index.html")
-        .catch(() => errorRegistro.innerText = "No se ha podido realizar el registro.")
-    });
+    form.addEventListener("submit", validarFormulario);
 
     document.getElementById("nombre").addEventListener("blur", validarNombre);
     document.getElementById("apellidos").addEventListener("blur", validarApellidos);
@@ -75,6 +17,65 @@ function asignarValidacion() {
     document.getElementById("condiciones").addEventListener("blur", validarCondiciones);
 }
 
+function validarFormulario(e) {
+    e.preventDefault();
+
+    const campos = [
+        { elemento: nombre, nombreCampo: "Nombre" },
+        { elemento: apellidos, nombreCampo: "Apellidos" },
+        { elemento: email, nombreCampo: "Email" },
+        { elemento: repetirEmail, nombreCampo: "Repetir Email" },
+        { elemento: password, nombreCampo: "Password" },
+        { elemento: repetirPassword, nombreCampo: "Repetir Password" }
+    ];
+
+    let hayVacios = false;
+
+    campos.forEach(c => {
+        if (!c.elemento.value.trim()) {
+            c.elemento.classList.add("resaltado");
+            hayVacios = true;
+        } else {
+            c.elemento.classList.remove("resaltado");
+        }
+    });
+
+    if (!condiciones.checked) {
+        condiciones.classList.add("resaltado");
+        hayVacios = true;
+    } else {
+        condiciones.classList.remove("resaltado");
+    }
+
+    if (hayVacios) {
+        errorRegistro.innerText = " No puedes dejar campos vacíos.";
+        return;
+    }
+
+    if (!validarNombre({ target: nombre })) return;
+    if (!validarApellidos({ target: apellidos })) return;
+    if (!validarEmail({ target: email })) return;
+    if (!validarRepetirEmail({ target: repetirEmail })) return;
+    if (!validarPassword({ target: password })) return;
+    if (!validarRepetirPassword({ target: repetirPassword })) return;
+    if (!validarCondiciones({ target: condiciones })) return;
+
+    if (errorRegistro) errorRegistro.innerText = "";
+
+    // Guardamos los datos del usuario recién registrado
+    let body = {
+        nombre: nombre.value.trim(),
+        apellidos: apellidos.value.trim(),
+        email: email.value.trim(),
+        password: password.value,
+        condiciones: condiciones.checked,
+        news: document.getElementById("news").checked
+    };
+
+    registro(body)
+        .then(() => window.location.href = "index.html")
+        .catch(() => errorRegistro.innerText = "No se ha podido realizar el registro.")
+}
 
 // Nombre: Obligatorio, longitud mínima 3 caracteres empezando por mayúscula. Informar de si cumple la validación al salir del campo.
 function validarNombre(e) {

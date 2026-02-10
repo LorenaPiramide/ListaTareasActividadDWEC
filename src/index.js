@@ -5,12 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const error = document.getElementById("errorLogin");
     const btnLogin = document.getElementById("btnLogin");
 
-    if (!btnLogin) {
-        console.error("No se encontró el botón de login.");
-        return;
-    }
-
-    btnLogin.addEventListener("click", function () {
+    btnLogin.addEventListener("click", () => {
         const email = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value;
 
